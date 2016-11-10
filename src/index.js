@@ -24,10 +24,10 @@ Array.prototype.groupBy = function(callback){
 
     var result = callback(currentItem, i, this);
 
-      if (typeof newGroups[result] === 'undefined'){
-        newGroups[result] = [currentItem];
-      } else{
-        newGroups[result].push(currentItem);
+    if (typeof newGroups[result] === 'undefined'){
+      newGroups[result] = [currentItem];
+    } else{
+      newGroups[result].push(currentItem);
       }
   }
       return newGroups;
@@ -36,6 +36,11 @@ Array.prototype.groupBy = function(callback){
 
 var groups = [1,2,3,4,5,6,7,8,9,10].groupBy(function(v, i, arr){
      return (v%2 === 0) ? 'even' : 'odd'
+  //   if (v%2 === 0) {
+  //     return 'even';
+  //  } else {
+  //     return 'odd';
+  //  }
 })
 
 
@@ -139,16 +144,16 @@ console.assert(inAFunction('what will', 'happen?') === undefined)
 var newObject = new inAFunction('what will', 'happen?')
 console.assert(newObject.name === 'Sally' )
 // // Once you've figured out what the output is, answer here in a comment: Why is this so?
-//
+
 var newObject2 = new inAFunction('what will', 'happen?')
 console.assert(newObject2.test3('C', 'D') === '[object Object],C,D')
-// // Once you've figured out what the output is, answer here in a comment: Why is this so?
-//
+// Once you've figured out what the output is, answer here in a comment: Why is this so?
+
 console.assert(inAnObject.test1.call(trickyTricky, 'face', 'book') === '[object Object],face,book')
-// // Once you've figured out what the output is, answer here in a comment: Why is this so?
-//
+// Once you've figured out what the output is, answer here in a comment: Why is this so?
+
 console.assert(inAnObject.anotherObject.test2.apply(confusing, ['foo', 'bar']) === '[object Object],foo,bar')
-// // Once you've figured out what the output is, answer here in a comment: Why is this so?
+// Once you've figured out what the output is, answer here in a comment: Why is this so?
 
 
 // constructor assignment
@@ -164,27 +169,35 @@ var foo = new Foo();
 console.assert(foo instanceof Foo)
 
 // 2. Create a constructor function called `Dog` that sets a property on itself within the constructor. The property should be called `says` and the value should be `life is ruff`
-var Dog = {
-  says: 'life is ruff';
-}
 
-var Dog = function(says){
-  this.says = says
+function Dog(){
+  this.says = 'life is ruff'
 }
-
-var dog = new Dog();
 
 // assertions
 console.assert(new Dog().says === "life is ruff")
 
 // 3. Create a constructor function called `Cat` that has a method on it's prototype called `growl` that returns the string `meow`; create an instance of this called `cat`
 
+function Cat(){
+};
+Cat.prototype.growl = function() {
+  return 'meow';
+}
 
+var cat = new Cat();
 // assertions
 console.assert(cat instanceof Cat)
 console.assert(cat.growl() === "meow")
 
 // 4. Create a constructor called `KeepSecret`. The constructor function itself should accept a parameter called `secret` it should store this in a private variable (use a closure). Add a method to the prototype that is called `squeal` that returns the secret string.
+
+function KeepSecret (secret){
+  this.secret = secret;
+}
+KeepSecret.prototype.squel = function(){
+    return this.secret;
+}
 
 // assertions
 var mySecret = "My class rocks!"
@@ -193,6 +206,21 @@ console.assert(dontTellNobody.squeal() === mySecret)
 
 // 5. Create a constructor called `Key`. Create another constructor called `Safe`. Make the Safe constructor take 2 arguments. The first argument can be any piece if data to keep safe. This must be stored using a private variable like you did with KeepSecret. The 2nd param to the `Safe` constructor needs to be an instance of `Key` you need to store it privately as well. Add a function to the Safe prototype called `unlock` that accepts a key. If the key matches the key that was used to create the Safe; then return the secret data.
 
+
+function Key() {
+
+}
+
+function Safe(keepme, theKeyInstance) {
+  this.keepme = keepme;
+  this.theKeyInstance = theKeyInstance;
+}
+
+Safe.prototype.unlock = function(key) {
+  if (key === this.theKeyInstance)  {
+    return this.keepme;
+  }
+}
 // assertions
 var sensitive = "shhhhh!"
 var rightKey  = new Key()
