@@ -14,29 +14,29 @@
 //
 // //--> { odd: [1,3,5,7,9], even: [2,4,6,8,10] }
 
-// Array.prototype.groupBy = function(callback){
-//   //creates empty object
-//   var newGroups = {};
-//   // runs loop through the numbers passed in
-//   for (var i = 0; i < this.length; i++) {
-//   // looks at single number
-//     var currentItem = this[i];
-//
-//     var result = callback(currentItem, i, this);
-//
-//       if (typeof newGroups[result] === 'undefined'){
-//         newGroups[result] = [currentItem];
-//       } else{
-//         newGroups[result].push(currentItem);
-//       }
-//   }
-//       return newGroups;
-// }
-//
-//
-// var groups = [1,2,3,4,5,6,7,8,9,10].groupBy(function(v, i, arr){
-//      return (v%2 === 0) ? 'even' : 'odd'
-// })
+Array.prototype.groupBy = function(callback){
+  //creates empty object
+  var newGroups = {};
+  // runs loop through the numbers passed in
+  for (var i = 0; i < this.length; i++) {
+  // looks at single number
+    var currentItem = this[i];
+
+    var result = callback(currentItem, i, this);
+
+      if (typeof newGroups[result] === 'undefined'){
+        newGroups[result] = [currentItem];
+      } else{
+        newGroups[result].push(currentItem);
+      }
+  }
+      return newGroups;
+}
+
+
+var groups = [1,2,3,4,5,6,7,8,9,10].groupBy(function(v, i, arr){
+     return (v%2 === 0) ? 'even' : 'odd'
+})
 
 
 
